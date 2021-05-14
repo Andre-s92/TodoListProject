@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-sm-6">
+    <form [formGroup]="todoForm">
+      <div class="form-group">
+        <label for="formGroupExampleInput">Descricao</label>
+        <input type="text" formControlName="descricao" class="form-control">
+      </div>
+      <br />
+      <select class="form-select" aria-label="Selecione Categoria" formControlName="prioridade" >
+        <option selected>Selecione Categoria</option>
+        <option value="Baixa">Baixa</option>
+        <option value="Media">Media</option>
+        <option value="Alta">Alta</option>
+      </select>
+      
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" formControlName="completado">
+        <label class="form-check-label" for="flexCheckChecked">
+          completado
+        </label>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">prazo</label>
+        <input type="datetime-local" formControlName="prazo" class="form-control">
+      </div>
+      <div class="form-group">
+        <hr>
+        <button type="reset" class="btn btn-primary" (click)="limpar()">novo</button> &nbsp;&nbsp;
+        
+        <button class="btn btn-success" (click)="saveTodo()" [disabled]="!todoForm.valid">Gravar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body d-flex justify-content-between">
+        <p>total: {{todos?.length}}</p>
+
+        <div class="d-flex flex-column">
+          <div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="asc" id="desc" (change)="onChangeRadio($event)">
+              <label class="form-check-label" for="desc">
+                Desc
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="asc" id="asc" (change)="onChangeRadio($event)" checked>
+              <label class="form-check-label" for="asc">
+                Asc
+              </label>
+            </div>
+          </div>
+          <select (change)="onChange($event)">
+            <option selected="selected">Ordenação</option>
+            <option value="Prazo">Prazo</option>
+            <option value="Prioridade">Prioridade</option>
+            <option value="Completados">Completados</option>
+          </select>
+        </div>
+        
+      </div>
+    </div>
+
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Visualizar</th>
+          <th scope="col">id</th>
+          <th scope="col">Descricao</th>
+          <th scope="col">Prioridade</th>
+          <th scope="col">Completado</th>
+          <th scope="col">Prazo</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tod of todos">
+          <td><button (click)="todoSelect(tod)" class="text-dark btn btn-sm btn btn-secondary">Selecionar</button></td>
+          <td scope="row">{{tod.id}}</td>
+          <td>{{tod.descricao}}</td>
+          <td>{{tod.prioridade}}</td>
+          <td>{{tod.completado}}</td>
+          <td>{{tod.prazo}}</td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-sm btn btn-danger" (click)="deletarTodo(tod.id)">Excluir</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
